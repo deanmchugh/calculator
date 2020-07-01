@@ -11,40 +11,42 @@ function App() {
 
   const calculationHandler = (input: string) => {
     if (input === 'AC') {
-      setCurrentOutput('')
-      setCurrentAnswer('')
+        setCurrentOutput('')
+        setCurrentAnswer('')
     } else if (input.match(/^[0-9]/) || input === '.') {
-      const newInput: string = currentOutput + input
-      if (newInput.match(/^-?\d*\.?\d*$/)) {
-        if (calculated) {
-          setCurrentOutput(input)
-          setCalculated(false)
-        } else {
-          setCurrentOutput(newInput)
-        }
-      } 
+        const newInput: string = currentOutput + input
+        if (newInput.match(/^-?\d*\.?\d*$/)) {
+            if (calculated) {
+                setCurrentOutput(input)
+                setCalculated(false)
+            } else {
+                setCurrentOutput(newInput)
+            }
+        } 
     } else if (input === '+/-' && currentOutput) {
-      currentOutput[0] === '-' ? setCurrentOutput(currentOutput.substr(1)) : 
-        setCurrentOutput('-' + currentOutput)
+        currentOutput[0] === '-' ? setCurrentOutput(currentOutput.substr(1)) : 
+            setCurrentOutput('-' + currentOutput)
+    // eslint-disable-next-line
     } else if (input.match(/^[\/\+\-\*]/)) {
-      setCurrentAnswer(currentOutput)
-      setCurrentOutput('')
-      setCurrentOppertor(input)
+        setCurrentAnswer(currentOutput)
+        setCurrentOutput('')
+        setCurrentOppertor(input)
     } else if (input === '=') {
-      const answer = eval(currentAnswer + currentOpperator + currentOutput)
-      setCurrentOutput(answer)
-      setCurrentAnswer(answer)
-      setCalculated(true)
+        // eslint-disable-next-line
+        const answer: number = eval(currentAnswer + currentOpperator + currentOutput)
+        setCurrentOutput(answer.toString())
+        setCurrentAnswer(answer.toString())
+        setCalculated(true)
     }
   }
 
   return (
-    <div className='App'>
-      <div className='calculator'>
-        <Display output={currentOutput} />
-        <NumberPad addUserInput={calculationHandler} />
+      <div className='App'>
+          <div className='calculator'>
+              <Display output={currentOutput} />
+              <NumberPad addUserInput={calculationHandler} />
+          </div>
       </div>
-    </div>
   );
 }
 
