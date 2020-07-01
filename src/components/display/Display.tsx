@@ -6,9 +6,13 @@ interface DisplayText {
 }
 
 const Display = ({output}: DisplayText) => {
+    const fontSize = {
+        fontSize: output.length > 9 ? 60 - output.length * 1.75 : 60
+    }
+
     return (
         <div className='display'>
-            <p>{output || '0'}</p>
+            <p className='text' style={fontSize}>{output || '0'}</p>
         </div>
     )
 }

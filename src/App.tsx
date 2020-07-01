@@ -7,18 +7,25 @@ function App() {
   const [currentOutput, setCurrentOutput] = useState<string>('')
   const [currentAnswer, setCurrentAnswer] = useState<string>('')
   const [currentOpperator, setCurrentOppertor] = useState<string>('')
-  const [currentSign, setCurrentSign] = useState<string>('+')
+  const [calculated, setCalculated] = useState<boolean>(false)
 
   const calculationHandler = (input: string) => {
-    console.log(input)
     if (input === 'AC') {
       setCurrentOutput('')
       setCurrentAnswer('')
     } else if (input.match(/^[0-9]/) || input === '.') {
-      setCurrentOutput(currentOutput + input)
-    } else if (input === '+/-') {
-      currentSign === '+' ? setCurrentSign('-') : setCurrentSign('+')
-      if (currentSign === '-') setCurrentOutput(currentSign + currentOutput)
+      const newInput: string = currentOutput + input
+      if (newInput.match(/^-?\d*\.?\d*$/)) {
+        if (calculated) {
+          setCurrentOutput(input)
+          setCalculated(false)
+        } else {
+          setCurrentOutput(newInput)
+        }
+      } 
+    } else if (input === '+/-' && currentOutput) {
+      currentOutput[0] === '-' ? setCurrentOutput(currentOutput.substr(1)) : 
+        setCurrentOutput('-' + currentOutput)
     } else if (input.match(/^[\/\+\-\*]/)) {
       setCurrentAnswer(currentOutput)
       setCurrentOutput('')
@@ -26,7 +33,8 @@ function App() {
     } else if (input === '=') {
       const answer = eval(currentAnswer + currentOpperator + currentOutput)
       setCurrentOutput(answer)
-      setCurrentAnswer('')
+      setCurrentAnswer(answer)
+      setCalculated(true)
     }
   }
 

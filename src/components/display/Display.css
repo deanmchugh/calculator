@@ -1,8 +1,11 @@
 .display {
-    margin-left: -12px;
-    width: 244px;
-    text-align: end;
-    font-size: 60px;
-    color: #D4D4D2;
     background-color: #1e1e1e ;
+    height: 70px;
+}
+
+.text {
+    margin: auto;
+    text-align: end;
+    color: #D4D4D2;
+    vertical-align: middle;
 }
